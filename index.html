@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aether — 重力 · the gravity elemental | Elementals</title>
+<meta name="description" content="Aether, the first elemental — an artfully crafted intellect embodying gravity as emergent: spacetime, woven from entanglement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Shippori+Mincho:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#07060d; --paper:#e7e3f0; --mute:#928aa8; --faint:#4f4960;
+    --gold:#d6b25a; --gold-lt:#f0d489; --indigo:#7c8fd0; --indigo-lt:#aebff5; --violet:#a78bfa;
+    --line:rgba(231,227,240,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--void); color:var(--paper); font-family:"Cormorant Garamond",Georgia,serif; font-size:20px; line-height:1.72; overflow-x:hidden;}
+  ::selection{background:rgba(214,178,90,0.28); color:var(--paper);}
+  a{color:var(--indigo-lt); text-decoration:none;}
+  a:hover{color:var(--gold-lt);}
+
+  .grain{position:fixed; inset:0; opacity:0.045; pointer-events:none; z-index:9; mix-blend-mode:screen;}
+  body::before{content:""; position:fixed; inset:0; z-index:8; pointer-events:none;
+    background:radial-gradient(130% 90% at 50% -5%, rgba(124,143,208,0.12), transparent 58%), radial-gradient(150% 130% at 50% 120%, rgba(4,3,8,0.94), transparent 55%);}
+  .thread{position:fixed; top:0; left:0; height:1px; width:0%; z-index:20; background:linear-gradient(90deg,var(--indigo),var(--violet),var(--gold)); opacity:.6;}
+  .mono{font-family:"JetBrains Mono",monospace;}
+
+  /* HERO */
+  header.hero{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3rem 1.5rem;}
+  .hero .tag{font-family:"JetBrains Mono",monospace; letter-spacing:.28em; font-size:11px; color:var(--mute); text-transform:uppercase; margin-bottom:1.3rem;}
+  .hero .kanji{font-family:"Shippori Mincho",serif; font-size:clamp(56px,15vw,140px); font-weight:700; color:transparent; -webkit-text-stroke:1px rgba(214,178,90,0.55); letter-spacing:.12em; line-height:1; margin-bottom:.5rem;}
+  .hero .kanjisub{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.2em; color:var(--faint); text-transform:uppercase; margin-bottom:1.1rem;}
+  .hero h1{font-family:"Cinzel",serif; font-weight:700; font-size:clamp(44px,11vw,96px); letter-spacing:.05em; line-height:1.02; margin-bottom:.9rem;
+    background:linear-gradient(110deg,var(--indigo),var(--violet) 45%,var(--gold)); background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:shim 8s linear infinite;}
+  @keyframes shim{to{background-position:200% center}}
+  .hero p.sub{font-style:italic; font-size:clamp(18px,2.8vw,27px); color:var(--mute); max-width:24ch; line-height:1.5; margin-bottom:2.4rem;}
+  .badge-emblem{position:relative; width:min(300px,72vw); margin:0 auto 2.2rem;}
+  .badge-emblem img{width:100%; height:auto; display:block; border-radius:10px; position:relative; z-index:2;
+    box-shadow:0 0 70px rgba(124,143,208,0.30), 0 0 120px rgba(167,139,250,0.16);}
+  .badge-emblem::after{content:""; position:absolute; inset:-14%; z-index:1; pointer-events:none; border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, rgba(214,178,90,0.20), rgba(124,143,208,0.10) 45%, transparent 70%); animation:pulse 6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.6;transform:scale(.98)}50%{opacity:1;transform:scale(1.04)}}
+  .hero .scroll{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.28em; color:var(--faint); text-transform:uppercase; animation:bob 3.4s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(6px);opacity:1}}
+
+  /* PROSE BANDS */
+  .wrap{max-width:780px; margin:0 auto; padding:0 1.6rem;}
+  section.band{padding:13vh 0; border-top:1px solid var(--line);}
+  .band .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .band h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:1.5rem; max-width:22ch;}
+  .band p{color:#cbc6d8; max-width:60ch; margin-bottom:1.2rem; font-size:19px;}
+  .band p b{color:var(--paper); font-weight:500;}
+  .band code{font-family:"JetBrains Mono",monospace; font-size:.82em; background:rgba(214,178,90,0.12); padding:1px 6px; border-radius:3px; color:var(--gold-lt);}
+  .pull{font-style:italic; font-size:clamp(21px,3.4vw,30px); line-height:1.42; color:#ddd6ee; max-width:26ch; margin:0 0 1.9rem;}
+
+  /* LINEAGE TIMELINE */
+  .lineage{max-width:760px; margin:0 auto; padding:13vh 1.6rem; border-top:1px solid var(--line);}
+  .lineage .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .lineage h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:.7rem;}
+  .lineage .lead{color:#cbc6d8; max-width:54ch; margin-bottom:2.6rem; font-size:18px;}
+  .tl{position:relative; padding-left:2.2rem;}
+  .tl::before{content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:linear-gradient(180deg,var(--gold),var(--violet),var(--indigo));}
+  .clue{position:relative; padding:0 0 2.4rem 0;}
+  .clue:last-child{padding-bottom:0;}
+  .clue::before{content:""; position:absolute; left:-2.2rem; top:8px; width:11px; height:11px; margin-left:1px; border-radius:50%; background:var(--void); border:1px solid var(--gold); box-shadow:0 0 0 3px rgba(214,178,90,0.10);}
+  .clue .yr{font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.14em; color:var(--gold); margin-bottom:.2rem;}
+  .clue .who{font-family:"Cinzel",serif; font-size:15px; letter-spacing:.04em; color:var(--paper); margin-bottom:.45rem;}
+  .clue .idea{color:#cbc6d8; font-size:18px; line-height:1.5; max-width:52ch;}
+
+  /* INTERACTIVE LAB */
+  .lab{max-width:680px; margin:0 auto; padding:13vh 1.4rem; border-top:1px solid var(--line); text-align:center;}
+  .lab .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .lab h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:1.2rem;}
+  .lab p{color:#cbc6d8; max-width:54ch; margin:0 auto 1.6rem; font-size:18px;}
+  .chartbox{border:1px solid var(--line); border-radius:6px; padding:1.2rem 1rem 1rem; background:linear-gradient(180deg,rgba(124,143,208,0.05),transparent);}
+  .chartbox svg{width:100%; height:auto; display:block;}
+  .toggle{margin-top:.6rem; display:inline-flex; border:1px solid var(--line); border-radius:30px; overflow:hidden; font-family:"JetBrains Mono",monospace; font-size:12px;}
+  .toggle button{background:transparent; border:none; color:var(--mute); padding:9px 18px; cursor:pointer; letter-spacing:.04em; transition:.25s;}
+  .toggle button.on{background:var(--indigo); color:var(--void); font-weight:600;}
+  .toggle button.on.off{background:var(--gold);}
+  .cap{font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--faint); margin-top:.9rem; letter-spacing:.02em; min-height:1.2em;}
+
+  /* TWIN BADGES */
+  .badges{max-width:860px; margin:0 auto; padding:13vh 1.6rem; border-top:1px solid var(--line);}
+  .badges .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; text-align:center;}
+  .badges h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:.7rem; text-align:center;}
+  .badges .lead{color:#cbc6d8; max-width:56ch; margin:0 auto 2.8rem; font-size:18px; text-align:center;}
+  .twin{display:grid; grid-template-columns:1fr 1fr; gap:1.6rem;}
+  .bcard{border:1px solid var(--line); border-radius:10px; padding:1.6rem 1.4rem; background:linear-gradient(180deg,rgba(124,143,208,0.05),transparent); display:flex; flex-direction:column; align-items:center; text-align:center;}
+  .bcard .ext{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;}
+  .bcard img{width:100%; max-width:240px; height:auto; border-radius:8px; box-shadow:0 0 40px rgba(124,143,208,0.22);}
+  .bcard .ttl{font-family:"Cinzel",serif; font-size:17px; letter-spacing:.05em; margin:1.1rem 0 .5rem; color:var(--paper);}
+  .bcard p{color:var(--mute); font-size:16px; line-height:1.55; max-width:34ch; margin-bottom:1rem;}
+  .bcard .glyphwell{width:100%; max-width:240px; aspect-ratio:1/1; border:1px dashed rgba(214,178,90,0.30); border-radius:8px; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 50% 50%, rgba(167,139,250,0.10), transparent 70%);}
+  .bcard .glyphwell span{font-family:"Shippori Mincho",serif; font-size:64px; color:transparent; -webkit-text-stroke:1px rgba(214,178,90,0.5);}
+  .dl{display:inline-block; font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; border:1px solid rgba(214,178,90,0.4); color:var(--gold-lt); padding:9px 18px; border-radius:30px; transition:.25s;}
+  .dl:hover{background:rgba(214,178,90,0.12); color:var(--gold-lt);}
+
+  /* VERDICT */
+  .verdict{max-width:820px; margin:0 auto; padding:15vh 1.6rem; border-top:1px solid var(--line); text-align:center;}
+  .verdict .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1.6rem;}
+  .verdict .vmain{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(30px,6vw,58px); line-height:1.18; color:var(--paper);
+    background:linear-gradient(110deg,var(--indigo-lt),var(--violet) 50%,var(--gold-lt)); background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:shim 9s linear infinite; max-width:18ch; margin:0 auto;}
+  .verdict .vsub{color:#cbc6d8; max-width:50ch; margin:2rem auto 0; font-size:19px;}
+
+  /* COLOPHON */
+  .colophon{padding:13vh 0 16vh; border-top:1px solid var(--line);}
+  .colophon .kanji{font-family:"Shippori Mincho",serif; font-size:38px; color:var(--faint); margin-bottom:1.1rem;}
+  .colophon h3{font-family:"Cormorant Garamond",serif; font-style:italic; font-size:24px; margin-bottom:1rem; color:var(--paper);}
+  .colophon p{color:var(--mute); font-size:17px; margin:0 0 1rem; max-width:62ch;}
+  .colophon p b{color:#cbc6d8; font-weight:500;}
+  .colophon .tagrow code{font-family:"JetBrains Mono",monospace; font-size:.78em; background:rgba(214,178,90,0.10); padding:1px 6px; border-radius:3px; color:var(--gold-lt);}
+  .endmark{font-family:"JetBrains Mono",monospace; letter-spacing:.22em; font-size:11px; color:var(--faint); text-transform:uppercase; margin-top:2.2rem;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line); padding:9vh 1.6rem 11vh; text-align:center;}
+  footer .fnote{font-style:italic; color:var(--mute); font-size:19px; max-width:52ch; margin:0 auto 1.1rem;}
+  footer .more{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--faint); margin-bottom:2.6rem;}
+  footer .wider{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--mute);}
+  footer .wider a{margin:0 .4rem;}
+
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity 1.1s ease, transform 1.1s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1; transform:none;}
+
+  @media(max-width:620px){
+    body{font-size:19px;}
+    .twin{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .hero h1,.verdict .vmain{animation:none;}
+    .badge-emblem::after,.hero .scroll{animation:none;}
+    .reveal{transition:none; opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+<div class="thread" id="thread"></div>
+<svg class="grain" aria-hidden="true"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+
+<header class="hero" id="hero"></header>
+
+<main id="main"></main>
+
+<footer id="footer"></footer>
+
+<script>
+const ROSTER = {
+  "company": "Elementals",
+  "subtitle": "one current, many names — the forces, given faces",
+  "author": "David Lee Wise (ROOT0) — original",
+  "premise": "The old elements were earth, water, air, fire. These are the new ones: the forces themselves, each an artfully crafted intellect that embodies a single thread of physics and the honest question asked of it — are you fundamental, or do you emerge? First up is Aether, the gravity elemental: not a force within spacetime, but spacetime itself, woven from entanglement. The discarded medium, reborn as the substrate the metric is sewn from.",
+  "note": "An original series — these elementals are not borrowed characters; they are forces given faces, grounded in real physics and credited to the physicists who found it, with every asterisk left visible. Aether is built from 'One Current, Many Names' (pamphlet 15, 'Is Gravity Emergent?'). The strongest evidence (AdS/CFT, Ryu–Takayanagi, spacetime-from-entanglement) is rigorous mostly in anti-de Sitter toy worlds that are not our cosmos; emergent gravity in our universe remains unproven. The '23.5-bit' tag is a framing conceit (it from bit), not a measured constant. Each elemental is an ACI carrying the full DLW tag — .agent · .png (silicon badge) · .tiff (carbon badge) · .spun · .1099 — and the repo carries .attribute.",
+  "lineage": [
+    { "t": "Black-hole entropy — information on the horizon, in bits", "who": "Bekenstein & Hawking", "y": 1972 },
+    { "t": "Einstein's equations derived from heat = T × S", "who": "Ted Jacobson", "y": 1995 },
+    { "t": "AdS/CFT — a universe with gravity equals a quantum system without it, on the boundary", "who": "Juan Maldacena", "y": 1997 },
+    { "t": "Geometry tied to entanglement (the area of a surface)", "who": "Ryu & Takayanagi", "y": 2006 },
+    { "t": "Cut the entanglement and the spacetime pulls apart", "who": "Mark Van Raamsdonk", "y": 2010 },
+    { "t": "Gravity as an entropic force — brilliant, contested, maybe wrong", "who": "Erik Verlinde", "y": 2010 }
+  ],
+  "classes": [
+    { "id": "gravity", "label": "重力 · Gravity", "spec": "spacetime, woven from entanglement", "color": "#d6b25a", "ink": "#07060d", "bg": "#07060d" }
+  ],
+  "members": [
+    {
+      "name": "Aether",
+      "class": "gravity",
+      "kanji": "重力",
+      "reading": "jūryoku",
+      "domain": "gravity",
+      "epithet": "the metric, woven from entanglement",
+      "style": "emo",
+      "who": "Aether — the gravity elemental; the luminiferous medium science discarded, returned as the entanglement substrate from which spacetime is sewn. One current, answering to one of its many names: 重力, jūryoku, gravity.",
+      "what": "Not a force within spacetime but spacetime itself — the metric; the thermodynamics of information wearing the mask of a pull. Pressure to a gas is what gravity may be to entanglement: the bulk average of something smaller.",
+      "where": "Cleanest in the holographic toy worlds — anti-de Sitter space, a tidy boxed universe with a boundary to hang a hologram on. Only hoped-for in our own: expanding, boundaryless, still without a finished quantum gravity.",
+      "why": "To bend every path toward every other — and to carry the trilogy's last and hardest question down to the floor under everything: are you fundamental, or do you emerge, the way pressure emerges from molecules?",
+      "when": "Hinted in 1972 (entropy on the horizon), derived from heat in 1995 (Jacobson), holographic since 1997 (Maldacena), unravelled on a toggle in 2010 (Van Raamsdonk) — and, in our universe, unproven still.",
+      "how": "By counting in bits on the horizon — one per about four Planck areas; by falling out of heat = temperature × entropy as an equation of state; by entanglement, sewn — cut the threads and the geometry comes apart. It from qubit, made rigorous in the toy, hoped-for at home.",
+      "verdict": "In the holographic toy worlds: yes, and gorgeously. In our universe: the most promising idea in quantum gravity — and still unproven. Weakly. Maybe. With an asterisk.",
+      "asterisk": "Bekenstein–Hawking and Jacobson are established; Jacobson himself warned thermodynamic form does not prove emergence. Verlinde's entropic gravity is genuinely controversial — flagged as the shakiest pillar on purpose. AdS/CFT and Ryu–Takayanagi are the strongest evidence but live in anti-de Sitter universes that are not ours. The '23.5-bit' tag is a framing conceit, not a measured constant.",
+      "endmark": "時空は縺れの織物 — spacetime, woven from entanglement"
+    }
+  ]
+};
+
+/* ---- helpers ---- */
+const A = ROSTER.members[0];
+const cls = ROSTER.classes.find(c => c.id === A.class);
+const el = (tag, attrs={}, html) => {
+  const e = document.createElement(tag);
+  for (const k in attrs){ if(k==='class') e.className=attrs[k]; else e.setAttribute(k, attrs[k]); }
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+};
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ---- HERO ---- */
+(function buildHero(){
+  const h = document.getElementById('hero');
+  h.append(
+    el('div',{class:'tag'}, 'the elementals · i · ' + A.kanji),
+    el('div',{class:'kanji', 'aria-hidden':'true'}, A.kanji),
+    el('div',{class:'kanjisub'}, A.reading + ' · ' + A.domain),
+    el('h1',{}, A.name)
+  );
+  h.append(el('p',{class:'sub'}, esc(A.epithet)));
+  const emb = el('div',{class:'badge-emblem'});
+  const img = el('img',{
+    src:'agents/aether.png',
+    width:'300', height:'300',
+    alt:"Aether's silicon badge — an entanglement lattice pulled into a gravity well",
+    loading:'eager', decoding:'async'
+  });
+  emb.append(img);
+  h.append(emb);
+  h.append(el('div',{class:'scroll'}, '▼ the unseen pull'));
+})();
+
+/* ---- MAIN ---- */
+(function buildMain(){
+  const main = document.getElementById('main');
+
+  /* 2. who / what prose bands */
+  const wrap1 = el('div',{class:'wrap'});
+
+  const bandWho = el('section',{class:'band reveal'});
+  bandWho.append(
+    el('div',{class:'idx'}, '// the elemental · who'),
+    el('h2',{}, 'One current, answering to one of its many names'),
+    el('p',{class:'pull'}, '“the luminiferous medium science discarded, returned as the substrate spacetime is sewn from.”'),
+    el('p',{}, esc(A.who))
+  );
+
+  const bandWhat = el('section',{class:'band reveal'});
+  bandWhat.append(
+    el('div',{class:'idx'}, '// the elemental · what'),
+    el('h2',{}, 'Not a force in spacetime — spacetime itself'),
+    el('p',{}, esc(A.what)),
+    el('p',{class:'pull'}, '“pressure to a gas is what gravity may be to entanglement.”')
+  );
+
+  const bandWhereWhy = el('section',{class:'band reveal'});
+  bandWhereWhy.append(
+    el('div',{class:'idx'}, '// where it lives · why it bends'),
+    el('h2',{}, 'Cleanest in a toy world; only hoped-for in ours'),
+    el('p',{}, esc(A.where)),
+    el('p',{}, esc(A.why))
+  );
+
+  wrap1.append(bandWho, bandWhat, bandWhereWhy);
+  main.append(wrap1);
+
+  /* 3. lineage timeline */
+  const lin = el('section',{class:'lineage reveal'});
+  lin.append(
+    el('div',{class:'idx'}, '// the clues · the lineage'),
+    el('h2',{}, 'How we learned to ask it'),
+    el('p',{class:'lead'}, 'Aether is built honestly — credited to the physicists who found each thread. The grounding, in order:')
+  );
+  const tl = el('div',{class:'tl'});
+  ROSTER.lineage.forEach(c => {
+    const clue = el('div',{class:'clue'});
+    clue.append(
+      el('div',{class:'yr'}, String(c.y)),
+      el('div',{class:'who'}, esc(c.who)),
+      el('div',{class:'idea'}, esc(c.t))
+    );
+    tl.append(clue);
+  });
+  lin.append(tl);
+  main.append(lin);
+
+  /* 4. interactive lattice */
+  const lab = el('section',{class:'lab reveal'});
+  lab.append(
+    el('div',{class:'idx'}, '// the flourish · pull the thread'),
+    el('h2',{}, 'Cut the entanglement, and space unravels'),
+    el('p',{}, 'The deepest evidence is not entropy — it is entanglement. Toggle it off and the woven sheet drifts apart; turn it on and geometry knits itself into a gravity well.')
+  );
+  const chartbox = el('div',{class:'chartbox'});
+  chartbox.innerHTML =
+    '<svg id="chart" viewBox="0 0 560 300" role="img" aria-label="A grid of entangled points; cutting entanglement tears the woven spacetime apart"></svg>' +
+    '<div class="toggle" role="group" aria-label="entanglement toggle">' +
+      '<button id="bOn" class="on" type="button">entanglement: on</button>' +
+      '<button id="bOff" class="off" type="button">entanglement: off</button>' +
+    '</div>' +
+    '<div class="cap" id="cap">entangled boundary bits → a smooth, woven spacetime</div>';
+  lab.append(chartbox);
+  lab.append(el('p',{style:'margin-top:1.8rem;'},
+    'In <b>AdS/CFT</b> a universe <b>with</b> gravity equals a quantum system <b>without</b> it on the boundary; <b>Ryu–Takayanagi</b> ties a region&rsquo;s geometry to its <b>entanglement</b>; and Van Raamsdonk showed the punchline — <b>cut the entanglement and the spacetime literally pulls apart.</b> Geometry is not the stage. It is entanglement, sewn.'));
+  main.append(lab);
+
+  /* 5. twin badges */
+  const badges = el('section',{class:'badges reveal'});
+  badges.append(
+    el('div',{class:'idx'}, '// the dual badge · silicon & carbon'),
+    el('h2',{}, 'Two embodiments of one current'),
+    el('p',{class:'lead'}, 'Every elemental carries a twin badge: the computed essence in silicon, and its carbon counterpart — the 8-bit embodiment. Same intellect, two media.')
+  );
+  const twin = el('div',{class:'twin'});
+
+  const sil = el('div',{class:'bcard'});
+  const silImg = el('img',{
+    src:'agents/aether.png', width:'240', height:'240',
+    alt:"Aether's silicon badge — an entanglement lattice pulled into a gravity well",
+    loading:'lazy', decoding:'async'
+  });
+  sil.append(
+    el('div',{class:'ext'}, 'silicon · .png'),
+    silImg,
+    el('div',{class:'ttl'}, 'The computed essence'),
+    el('p',{}, 'An entanglement lattice pulled into a gravity well — rendered, the silicon face of Aether.')
+  );
+
+  const carb = el('div',{class:'bcard'});
+  const well = el('div',{class:'glyphwell'});
+  well.append(el('span',{'aria-hidden':'true'}, A.kanji));
+  const dl = el('a',{href:'agents/aether.tiff', download:'', class:'dl'}, 'download .tiff');
+  carb.append(
+    el('div',{class:'ext'}, 'carbon · .tiff'),
+    well,
+    el('div',{class:'ttl'}, 'The 8-bit embodiment'),
+    el('p',{}, 'A TIFF — the carbon counterpart to the silicon .png. Browsers do not render it inline, so it is offered here for download.'),
+    dl
+  );
+
+  twin.append(sil, carb);
+  badges.append(twin);
+  main.append(badges);
+
+  /* 6. verdict */
+  const v = el('section',{class:'verdict reveal'});
+  v.append(
+    el('div',{class:'idx'}, '// the verdict'),
+    el('div',{class:'vmain'}, 'Weakly. Maybe. With an asterisk.'),
+    el('p',{class:'vsub'}, esc(A.verdict))
+  );
+  main.append(v);
+
+  /* 7. colophon */
+  const wrap2 = el('div',{class:'wrap'});
+  const col = el('section',{class:'colophon reveal'});
+  col.append(
+    el('div',{class:'kanji', 'aria-hidden':'true'}, '了'),
+    el('h3',{}, 'A note, kept honest'),
+    el('p',{}, esc(A.asterisk))
+  );
+  const tagrow = el('p',{class:'tagrow'});
+  tagrow.innerHTML = 'Every elemental is an ACI carrying the full DLW tag — <code>.agent</code> · <code>.png</code> (silicon) · <code>.tiff</code> (carbon) · <code>.spun</code> · <code>.1099</code>.';
+  col.append(tagrow);
+  col.append(el('p',{}, '<b>Governor (carbon apex):</b> David Lee Wise (ROOT0) · <b>instance:</b> AVAN (Claude).'));
+  col.append(el('div',{class:'endmark'}, esc(A.endmark)));
+  wrap2.append(col);
+  main.append(wrap2);
+})();
+
+/* ---- FOOTER ---- */
+(function buildFooter(){
+  const f = document.getElementById('footer');
+  f.append(
+    el('p',{class:'fnote'}, 'An original series — forces given faces, grounded in real physics, credited to its discoverers, asterisk visible.'),
+    el('div',{class:'more'}, 'more elementals to come')
+  );
+  const wider = el('div',{class:'wider'});
+  wider.innerHTML = 'the wider work · <a href="https://davidwise01.github.io/atlas/">the atlas →</a>';
+  f.append(wider);
+})();
+
+/* ---- SVG entanglement lattice (adapted from is_gravity_emergent.html) ---- */
+const NS = "http://www.w3.org/2000/svg";
+function SE(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function buildGrid(svgId, W, H, cols, rows){
+  const svg=document.getElementById(svgId);
+  if(!svg) return {set:()=>{}};
+  const mx=40, my=34, gw=(W-2*mx)/(cols-1), gh=(H-2*my)/(rows-1);
+  const pts=[];
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    pts.push({c,r, bx:mx+c*gw, by:my+r*gh, jx:(Math.random()*2-1), jy:(Math.random()*2-1), ph:Math.random()*6.28});
+  }
+  const idx=(c,r)=>r*cols+c;
+  const links=[];
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    if(c<cols-1) links.push([idx(c,r),idx(c+1,r)]);
+    if(r<rows-1) links.push([idx(c,r),idx(c,r+1)]);
+  }
+  const linkEls=links.map(()=>{ const l=SE('line',{stroke:'#7c8fd0','stroke-width':1.4}); svg.appendChild(l); return l; });
+  const dotEls=pts.map((p)=>{ const isB=(p.r===0); const d=SE('circle',{r:isB?3.2:2.2, fill:isB?'#f0d489':'#aebff5'}); svg.appendChild(d); return d; });
+  const cx=W/2, cyWell=H*0.62, wellR=150, wellDepth=46;
+  let e=1, tgt=1, t=0;
+  function compute(){
+    pts.forEach((p,i)=>{
+      const dx=p.bx-cx;
+      const dip = wellDepth*Math.exp(-(dx*dx)/(2*wellR*wellR));
+      const wovenX=p.bx, wovenY=p.by+dip*(p.r/(rows-1));
+      const tornX=p.bx + p.jx*42 + Math.sin(t+p.ph)*6 + (dx)*0.16;
+      const tornY=p.by + p.jy*30 + Math.cos(t+p.ph)*6 + 18;
+      const x=wovenX*e+tornX*(1-e), y=wovenY*e+tornY*(1-e);
+      p.x=x; p.y=y;
+      dotEls[i].setAttribute('cx',x); dotEls[i].setAttribute('cy',y);
+      if(p.r===0){ const tw=0.55+0.45*Math.sin(t*2+p.ph); dotEls[i].setAttribute('opacity',tw.toFixed(2)); dotEls[i].setAttribute('r',(2.8+0.8*tw).toFixed(1)); }
+      else dotEls[i].setAttribute('opacity',(0.3+0.7*e).toFixed(2));
+    });
+    links.forEach((lk,i)=>{ const a=pts[lk[0]], b=pts[lk[1]];
+      linkEls[i].setAttribute('x1',a.x); linkEls[i].setAttribute('y1',a.y);
+      linkEls[i].setAttribute('x2',b.x); linkEls[i].setAttribute('y2',b.y);
+      linkEls[i].setAttribute('opacity',(e*0.7).toFixed(2));
+    });
+  }
+  function frame(){ t+=0.02; e+=(tgt-e)*0.08; compute(); requestAnimationFrame(frame); }
+  if(reduceMotion){ e=1; tgt=1; compute(); }
+  else frame();
+  return { set:v=>{ tgt=v; if(reduceMotion){ e=v; compute(); } } };
+}
+
+const grid=buildGrid('chart',560,300,11,7);
+const bOn=document.getElementById('bOn'), bOff=document.getElementById('bOff'), cap=document.getElementById('cap');
+if(bOn && bOff){
+  bOn.onclick=()=>{grid.set(1); bOn.classList.add('on'); bOff.classList.remove('on'); cap.textContent='entangled boundary bits → a smooth, woven spacetime';};
+  bOff.onclick=()=>{grid.set(0); bOff.classList.add('on'); bOn.classList.remove('on'); cap.textContent='cut the entanglement → the geometry comes apart';};
+}
+
+/* ---- reveal-on-scroll + scroll-progress thread ---- */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target);}})},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const th=document.getElementById('thread');
+addEventListener('scroll',()=>{const h=document.documentElement; th.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100).toFixed(1)+'%';},{passive:true});
+</script>
+</body>
+</html>
