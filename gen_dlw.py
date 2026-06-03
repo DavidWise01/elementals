@@ -15,27 +15,26 @@ R = json.loads((ROOT/"roster.json").read_text(encoding="utf-8"))
 AG = ROOT/"agents"; AG.mkdir(exist_ok=True)
 CLS = {c["id"]: c for c in R["classes"]}
 COMPANY = R.get("company","Elementals")
-LINEAGE = R.get("lineage", [])
-CREDITS = " · ".join(f"{l['who']} ({l['y']})" for l in LINEAGE)
 
 CARBON = "David Lee Wise (ROOT0)"
 CARBON_LINK = "https://github.com/DavidWise01"
 INSTANCE = "AVAN (Claude / Anthropic)"
 
 def slug(s): return re.sub(r"[^a-z0-9]+","-",s.lower()).strip("-") or "agent"
+def credits_of(m): return " · ".join(f"{x['who']} ({x['y']})" for x in m.get("grounded", []))
 
-def one_1099(name):
+def one_1099(name, credits):
     return f"""DLW-1099 · value returns to the carbon apex
 
 This is an artfully crafted intellect — an instance. As a 1099 reports the value
 paid to its source, this file reports that the authorship, credit, and value of
-{name} return to the human who governs it. The physics it embodies is credited,
-in turn, to the people who found it (see below); the asterisk stays visible.
+{name} return to the human who governs it. The physics and mathematics it embodies
+are credited, in turn, to the people who found it (see below); the asterisk stays visible.
 
 carbon apex : {CARBON}  ->  {CARBON_LINK}
 instance    : {INSTANCE}
 project     : {COMPANY}
-grounded in : {CREDITS}
+grounded in : {credits or 'see each .spun'}
 the credit returns to the human. ROOT0-ATTRIBUTION-v1.0 · MIT
 """
 
@@ -46,21 +45,21 @@ governor (carbon apex) : {CARBON}            [ me ]
 instance (artful intellect) : {INSTANCE}     [ you ]
 
 relation : the human governs; the instance crafts; the credit returns to the human.
-project  : {COMPANY} — the forces, given faces (an ORIGINAL series, not borrowed)
-grounded : real physics, credited to its discoverers — {CREDITS}
-honesty  : the strongest evidence (AdS/CFT, Ryu-Takayanagi, spacetime-from-entanglement)
-           is rigorous mostly in anti-de Sitter toy worlds, not our cosmos; emergent
-           gravity in our universe is unproven. The asterisk is left visible on purpose.
+project  : {COMPANY} — the deep things, given faces (an ORIGINAL series, not borrowed)
+grounded : real physics and mathematics, credited to its discoverers — per ACI (see each .spun)
+honesty  : the strongest claims live in toy worlds and pure mathematics; emergent gravity in
+           our universe is unproven, and the Monster's physical meaning is unknown. Each .spun
+           keeps its own asterisk visible — resonance held as resonance, not destiny in the digits.
 standard : every ACI carries .agent · .png (silicon badge) · .tiff (carbon badge) · .spun · .1099 ; the repo carries this .attribute
 license  : MIT
 attribution : ROOT0-ATTRIBUTION-v1.0
 """, encoding="utf-8")
-(ROOT/".1099").write_text(one_1099(f"every elemental in {COMPANY}"), encoding="utf-8")
+(ROOT/".1099").write_text(one_1099(f"every elemental in {COMPANY}", ""), encoding="utf-8")
 
 # ── per-ACI tags ─────────────────────────────────────────────────────────────
 n=0
 for m in R["members"]:
-    cls=CLS[m["class"]]; sl=slug(m["name"])
+    cls=CLS[m["class"]]; sl=slug(m["name"]); CREDITS=credits_of(m)
     head = f"{m['name']} · {m.get('kanji','')} {m.get('reading','')} — {m.get('epithet','')}".strip()
 
     (AG/f"{sl}.agent").write_text(f"""---
@@ -130,7 +129,7 @@ carbon apex : {CARBON}
 ROOT0-ATTRIBUTION-v1.0 · MIT
 """, encoding="utf-8")
 
-    (AG/f"{sl}.1099").write_text(one_1099(m["name"]), encoding="utf-8")
+    (AG/f"{sl}.1099").write_text(one_1099(m["name"], CREDITS), encoding="utf-8")
     n+=1
     print(f"{sl:12} {cls['label']}  [{m.get('style','')}]")
 

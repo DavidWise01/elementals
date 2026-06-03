@@ -51,7 +51,26 @@ def png(path,w,h,px):     # preview only
     def ch(t,d): return struct.pack(">I",len(d))+t+d+struct.pack(">I",zlib.crc32(t+d)&0xffffffff)
     Path(path).write_bytes(b"\x89PNG\r\n\x1a\n"+ch(b"IHDR",struct.pack(">IIBBBBB",w,h,8,2,0,0,0))+ch(b"IDAT",comp)+ch(b"IEND",b""))
 
-def portrait(member):
+def finish(g, drawn):
+    """8-bit sticker outline + nearest-neighbour upscale to device resolution."""
+    based=list(drawn)
+    for y in range(LH):
+        for x in range(LW):
+            if based[y*LW+x]: continue
+            for dx,dy in ((1,0),(-1,0),(0,1),(0,-1)):
+                nx,ny=x+dx,y+dy
+                if 0<=nx<LW and 0<=ny<LH and based[ny*LW+nx]:
+                    g[y*LW+x]=(10,9,16); break
+    out=[VOID]*(W*H)
+    for y in range(LH):
+        for x in range(LW):
+            c=g[y*LW+x]
+            for yy in range(S):
+                row=(y*S+yy)*W
+                for xx in range(S): out[row+x*S+xx]=c
+    return out
+
+def portrait_aether(member):
     cls = CLS[member["class"]]
     rb = hashlib.sha256(("aether:"+member["name"]).encode()).digest()
     g = [VOID]*(LW*LH); drawn=[False]*(LW*LH)
@@ -130,32 +149,95 @@ def portrait(member):
     for i,(tx,ty) in enumerate(tail):
         put(tx,ty, band if i%2 else band_sh); put(tx,ty+1, band_sh)
     put(61,28, band_sh); put(60,30, band_sh)        # fray
+    return finish(g, drawn)
 
-    # outline pass (8-bit sticker edge)
-    based=list(drawn)
+
+def portrait_leech(member):
+    """The 24-bit emergent: a serene mask mended down the middle in gold —
+    kintsugi, two unrelated worlds joined by a single seam (moonshine) — crowned
+    by a halo of 24 points (the dimension, the kisses). Indigo/violet robe."""
+    g = [VOID]*(LW*LH); drawn=[False]*(LW*LH)
+    def put(x,y,c):
+        if 0<=x<LW and 0<=y<LH: g[y*LW+x]=c; drawn[y*LW+x]=True
+    def soft(x,y,c,a):
+        if 0<=x<LW and 0<=y<LH:
+            i=y*LW+x; g[i]=mix(g[i],c,a)
+    def rect(x0,y0,x1,y1,c):
+        for y in range(int(y0),int(y1)+1):
+            for x in range(int(x0),int(x1)+1): put(x,y,c)
+    def ell(cx,cy,rx,ry,c):
+        for y in range(int(cy-ry),int(cy+ry)+1):
+            for x in range(int(cx-rx),int(cx+rx)+1):
+                if ((x-cx)/rx)**2+((y-cy)/ry)**2<=1.0: put(x,y,c)
+
+    GOLD2=(240,212,137); VIOL=(167,139,250); INDI=(124,143,208)
+    cx=32; hy=33
+    # faint violet glow, center
     for y in range(LH):
         for x in range(LW):
-            if based[y*LW+x]: continue
-            for dx,dy in ((1,0),(-1,0),(0,1),(0,-1)):
-                nx,ny=x+dx,y+dy
-                if 0<=nx<LW and 0<=ny<LH and based[ny*LW+nx]:
-                    g[y*LW+x]=(10,9,16); break
+            d=((x-cx)**2/640.0+(y-26)**2/520.0)
+            if d<1: soft(x,y, VIOL, 0.12*(1-d))
 
-    out=[VOID]*(W*H)
-    for y in range(LH):
-        for x in range(LW):
-            c=g[y*LW+x]
-            for yy in range(S):
-                row=(y*S+yy)*W
-                for xx in range(S): out[row+x*S+xx]=c
-    return out
+    # the 24-point halo (the dimension / the kisses) — a ring of small spheres
+    import math as _m
+    for k in range(24):
+        a=k*(2*_m.pi/24) - _m.pi/2
+        hx=cx + 25*_m.cos(a); hyy=24 + 17*_m.sin(a)
+        c = GOLD2 if k%2==0 else VIOL
+        put(round(hx),round(hyy),c)
+        if k%6==0: put(round(hx),round(hyy)-1,GOLD2)   # four cardinal points brighter
+
+    # robe / shoulders (indigo-violet)
+    robe=(70,72,120); robe_sh=shade(robe,0.34)
+    rect(8,58,55,79, robe)
+    for x in range(8,56):
+        if x<13 or x>50: rect(x,58,x,60,VOID)
+    rect(20,57,44,60, robe_sh)
+    for k in range(7): put(32-k,57+k, robe_sh); put(32+k,57+k, robe_sh)
+    rect(30,58,34,70, shade(robe,0.2))
+    # neck
+    rect(28,47,36,57, (150,150,160))
+    # the mask — a pale, faceted oval (two halves)
+    maskL=(214,210,224); maskR=(196,192,210)
+    for y in range(int(hy-18), int(hy+18)+1):
+        for x in range(int(cx-13), int(cx+13)+1):
+            if ((x-cx)/13.0)**2+((y-hy)/18.0)**2<=1.0:
+                put(x,y, maskL if x<cx else maskR)
+    # faint facet lines (crystalline)
+    for fx in (cx-7, cx+7):
+        for y in range(hy-12, hy+13):
+            if drawn[y*LW+fx]: soft(fx,y, shade(maskL,0.25), 0.5)
+    # closed, serene eyes
+    rect(cx-8,hy-3,cx-3,hy-3, (60,58,80)); rect(cx+3,hy-3,cx+8,hy-3, (60,58,80))
+    put(cx-8,hy-2,(60,58,80)); put(cx+8,hy-2,(60,58,80))
+    # the kintsugi seam — a gold crack down the center (the moonshine bridge)
+    seam=[(cx,hy-18),(cx,hy-12),(cx-1,hy-6),(cx,hy-1),(cx+1,hy+5),(cx,hy+11),(cx-1,hy+17)]
+    for i in range(len(seam)-1):
+        x0,y0=seam[i]; x1,y1=seam[i+1]
+        n=max(abs(x1-x0),abs(y1-y0))+1
+        for t in range(n+1):
+            xx=round(x0+(x1-x0)*t/n); yy=round(y0+(y1-y0)*t/n)
+            put(xx,yy,GOLD2);
+            if t%2==0: put(xx+1,yy,shade(GOLD2,0.2))
+    # a small gold node where the seam meets the brow (196884 = 196883 + 1)
+    put(cx,hy-9,(255,255,255)); put(cx,hy-10,GOLD2)
+    # a thin gold circlet across the brow, tying to the halo
+    rect(cx-11,hy-15,cx+11,hy-15, GOLD2)
+    return finish(g, drawn)
+
+
+PORTRAITS = {"gravity": portrait_aether, "lattice": portrait_leech}
 
 import sys
 if __name__=="__main__" and len(sys.argv)>1 and sys.argv[1]=="--preview":
-    m=R["members"][0]; px=portrait(m)
-    tiff(ROOT/"_preview_carbon.tiff", W,H,px); png(ROOT/"_preview_carbon.png", W,H,px)
-    print("preview written:", m["name"])
+    byname={m["name"]:m for m in R["members"]}
+    targets = sys.argv[2:] or [R["members"][0]["name"]]
+    for nm in targets:
+        m=byname[nm]; fn=PORTRAITS.get(m.get("domain"), portrait_aether); px=fn(m)
+        tiff(ROOT/f"_preview_{slug(nm)}.tiff", W,H,px); png(ROOT/f"_preview_{slug(nm)}.png", W,H,px)
+        print("preview written:", nm)
 else:
     for m in R["members"]:
-        tiff(AG/f"{slug(m['name'])}.tiff", W, H, portrait(m))
+        fn=PORTRAITS.get(m.get("domain"), portrait_aether)
+        tiff(AG/f"{slug(m['name'])}.tiff", W, H, fn(m))
         print(f"carbon badge -> agents/{slug(m['name'])}.tiff  ({m['name']})")

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leech — 格子 · the 24-dimensional lattice | Elementals</title>
+<meta name="description" content="Leech, the second elemental — an artfully crafted intellect embodying the Leech lattice Λ₂₄: the crossroads where packing, the Monster, moonshine, and the bosonic string all knot at 24.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Shippori+Mincho:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#07060d; --paper:#e7e3f0; --mute:#928aa8; --faint:#4f4960;
+    --gold:#d6b25a; --gold-lt:#f0d489; --indigo:#7c8fd0; --indigo-lt:#aebff5; --violet:#a78bfa; --violet-lt:#c9b6ff;
+    --est:#5fd0a0;
+    --line:rgba(231,227,240,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--void); color:var(--paper); font-family:"Cormorant Garamond",Georgia,serif; font-size:20px; line-height:1.72; overflow-x:hidden;}
+  ::selection{background:rgba(167,139,250,0.30); color:var(--paper);}
+  a{color:var(--violet-lt); text-decoration:none;}
+  a:hover{color:var(--gold-lt);}
+
+  .grain{position:fixed; inset:0; opacity:0.045; pointer-events:none; z-index:9; mix-blend-mode:screen;}
+  body::before{content:""; position:fixed; inset:0; z-index:8; pointer-events:none;
+    background:radial-gradient(130% 90% at 50% -5%, rgba(167,139,250,0.14), transparent 58%), radial-gradient(150% 130% at 50% 120%, rgba(4,3,8,0.94), transparent 55%);}
+  .thread{position:fixed; top:0; left:0; height:1px; width:0%; z-index:20; background:linear-gradient(90deg,var(--indigo),var(--violet),var(--gold)); opacity:.6;}
+  .mono{font-family:"JetBrains Mono",monospace;}
+
+  /* HERO */
+  header.hero{min-height:92vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3rem 1.5rem;}
+  .hero .tag{font-family:"JetBrains Mono",monospace; letter-spacing:.28em; font-size:11px; color:var(--mute); text-transform:uppercase; margin-bottom:1.3rem;}
+  .hero .kanji{font-family:"Shippori Mincho",serif; font-size:clamp(56px,15vw,140px); font-weight:700; color:transparent; -webkit-text-stroke:1px rgba(167,139,250,0.60); letter-spacing:.12em; line-height:1; margin-bottom:.5rem;}
+  .hero .kanjisub{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.2em; color:var(--faint); text-transform:uppercase; margin-bottom:1.1rem;}
+  .hero h1{font-family:"Cinzel",serif; font-weight:700; font-size:clamp(44px,11vw,96px); letter-spacing:.05em; line-height:1.02; margin-bottom:.9rem;
+    background:linear-gradient(110deg,var(--indigo),var(--violet) 45%,var(--gold)); background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:shim 8s linear infinite;}
+  @keyframes shim{to{background-position:200% center}}
+  .hero p.sub{font-style:italic; font-size:clamp(18px,2.8vw,27px); color:var(--mute); max-width:26ch; line-height:1.5; margin-bottom:2.4rem;}
+  .badge-emblem{position:relative; width:min(300px,72vw); margin:0 auto 2.2rem;}
+  .badge-emblem img{width:100%; height:auto; display:block; border-radius:10px; position:relative; z-index:2;
+    box-shadow:0 0 70px rgba(167,139,250,0.34), 0 0 120px rgba(124,143,208,0.16);}
+  .badge-emblem::after{content:""; position:absolute; inset:-14%; z-index:1; pointer-events:none; border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, rgba(167,139,250,0.24), rgba(214,178,90,0.10) 45%, transparent 70%); animation:pulse 6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.6;transform:scale(.98)}50%{opacity:1;transform:scale(1.04)}}
+  .hero .scroll{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.28em; color:var(--faint); text-transform:uppercase; animation:bob 3.4s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(6px);opacity:1}}
+
+  /* PROSE BANDS */
+  .wrap{max-width:780px; margin:0 auto; padding:0 1.6rem;}
+  section.band{padding:13vh 0; border-top:1px solid var(--line);}
+  .band .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--violet); margin-bottom:1rem;}
+  .band h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:1.5rem; max-width:24ch;}
+  .band p{color:#cbc6d8; max-width:60ch; margin-bottom:1.2rem; font-size:19px;}
+  .band p b{color:var(--paper); font-weight:500;}
+  .band code{font-family:"JetBrains Mono",monospace; font-size:.82em; background:rgba(167,139,250,0.14); padding:1px 6px; border-radius:3px; color:var(--violet-lt);}
+  .pull{font-style:italic; font-size:clamp(21px,3.4vw,30px); line-height:1.42; color:#ddd6ee; max-width:28ch; margin:0 0 1.9rem; padding-left:1.2rem; border-left:2px solid var(--violet);}
+
+  /* MOONSHINE EQUATION */
+  .eqsec{max-width:760px; margin:0 auto; padding:13vh 1.6rem; border-top:1px solid var(--line); text-align:center;}
+  .eqsec .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--violet); margin-bottom:1rem;}
+  .eqsec h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:1.4rem;}
+  .eqsec p.lead{color:#cbc6d8; max-width:56ch; margin:0 auto 1.6rem; font-size:18px;}
+  .reveal-eq{background:rgba(255,255,255,0.015); border:1px solid var(--line); border-radius:6px; padding:2.4rem 1.4rem; margin:1.6rem auto 0; max-width:560px;}
+  .reveal-eq .big{font-family:"JetBrains Mono",monospace; font-size:clamp(20px,5vw,34px); color:var(--paper); line-height:1.8; letter-spacing:.01em;}
+  .reveal-eq .big .g{color:var(--gold-lt);}
+  .reveal-eq .big .v{color:var(--violet-lt);}
+  .reveal-eq .lbl{font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--mute); letter-spacing:.04em; margin-top:1.2rem; line-height:1.7;}
+
+  /* DIAGRAM */
+  .diagsec{max-width:760px; margin:0 auto; padding:13vh 1.6rem; border-top:1px solid var(--line);}
+  .diagsec .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--violet); margin-bottom:1rem;}
+  .diagsec h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:1.2rem;}
+  .diagsec p{color:#cbc6d8; max-width:58ch; margin-bottom:1.2rem; font-size:18px;}
+  .diagsec p b{color:var(--paper); font-weight:500;}
+  .diagram{background:rgba(255,255,255,0.015); border:1px solid var(--line); border-radius:6px; padding:1.4rem 1rem; margin:2rem 0;}
+  .diagram svg{width:100%; height:auto; display:block;}
+
+  /* HONESTY NOTES */
+  .note{border:1px solid rgba(167,139,250,0.4); border-left:2px solid var(--violet); border-radius:0 5px 5px 0; background:linear-gradient(90deg,rgba(167,139,250,0.06),transparent); padding:1.3rem 1.5rem; margin:2rem 0;}
+  .note .h{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--violet); margin-bottom:.6rem;}
+  .note p{color:#cbc6d8; font-size:16px; margin:0; max-width:62ch;}
+  .note b{color:var(--paper);}
+  .note code{font-family:"JetBrains Mono",monospace; font-size:.82em; background:rgba(167,139,250,0.14); padding:1px 6px; border-radius:3px; color:var(--violet-lt);}
+  .note.green{border-color:rgba(95,208,160,0.4); border-left-color:var(--est); background:linear-gradient(90deg,rgba(95,208,160,0.06),transparent);}
+  .note.green .h{color:var(--est);}
+  .note.green code{background:rgba(95,208,160,0.12); color:#9fe6c8;}
+
+  /* LINEAGE TIMELINE */
+  .lineage{max-width:760px; margin:0 auto; padding:13vh 1.6rem; border-top:1px solid var(--line);}
+  .lineage .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--violet); margin-bottom:1rem;}
+  .lineage h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:.7rem;}
+  .lineage .lead{color:#cbc6d8; max-width:54ch; margin-bottom:2.6rem; font-size:18px;}
+  .tl{position:relative; padding-left:2.2rem;}
+  .tl::before{content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:linear-gradient(180deg,var(--gold),var(--violet),var(--indigo));}
+  .clue{position:relative; padding:0 0 2.4rem 0;}
+  .clue:last-child{padding-bottom:0;}
+  .clue::before{content:""; position:absolute; left:-2.2rem; top:8px; width:11px; height:11px; margin-left:1px; border-radius:50%; background:var(--void); border:1px solid var(--gold); box-shadow:0 0 0 3px rgba(167,139,250,0.12);}
+  .clue .yr{font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.14em; color:var(--gold); margin-bottom:.2rem;}
+  .clue .who{font-family:"Cinzel",serif; font-size:15px; letter-spacing:.04em; color:var(--paper); margin-bottom:.45rem;}
+  .clue .idea{color:#cbc6d8; font-size:18px; line-height:1.5; max-width:52ch;}
+
+  /* TWIN BADGES */
+  .badges{max-width:860px; margin:0 auto; padding:13vh 1.6rem; border-top:1px solid var(--line);}
+  .badges .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--violet); margin-bottom:1rem; text-align:center;}
+  .badges h2{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(26px,4.6vw,40px); color:var(--paper); margin-bottom:.7rem; text-align:center;}
+  .badges .lead{color:#cbc6d8; max-width:56ch; margin:0 auto 2.8rem; font-size:18px; text-align:center;}
+  .twin{display:grid; grid-template-columns:1fr 1fr; gap:1.6rem;}
+  .bcard{border:1px solid var(--line); border-radius:10px; padding:1.6rem 1.4rem; background:linear-gradient(180deg,rgba(167,139,250,0.06),transparent); display:flex; flex-direction:column; align-items:center; text-align:center;}
+  .bcard .ext{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--violet); margin-bottom:1rem;}
+  .bcard img{width:100%; max-width:240px; height:auto; border-radius:8px; box-shadow:0 0 40px rgba(167,139,250,0.26);}
+  .bcard .ttl{font-family:"Cinzel",serif; font-size:17px; letter-spacing:.05em; margin:1.1rem 0 .5rem; color:var(--paper);}
+  .bcard p{color:var(--mute); font-size:16px; line-height:1.55; max-width:34ch; margin-bottom:1rem;}
+  .bcard .glyphwell{width:100%; max-width:240px; aspect-ratio:1/1; border:1px dashed rgba(167,139,250,0.34); border-radius:8px; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 50% 50%, rgba(167,139,250,0.12), transparent 70%);}
+  .bcard .glyphwell span{font-family:"Shippori Mincho",serif; font-size:64px; color:transparent; -webkit-text-stroke:1px rgba(167,139,250,0.55);}
+  .dl{display:inline-block; font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; border:1px solid rgba(167,139,250,0.45); color:var(--violet-lt); padding:9px 18px; border-radius:30px; transition:.25s;}
+  .dl:hover{background:rgba(167,139,250,0.14); color:var(--violet-lt);}
+
+  /* VERDICT */
+  .verdict{max-width:820px; margin:0 auto; padding:15vh 1.6rem; border-top:1px solid var(--line); text-align:center;}
+  .verdict .idx{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--violet); margin-bottom:1.6rem;}
+  .verdict .vmain{font-family:"Cormorant Garamond",serif; font-weight:500; font-size:clamp(28px,5.4vw,52px); line-height:1.2; color:var(--paper);
+    background:linear-gradient(110deg,var(--indigo-lt),var(--violet) 50%,var(--gold-lt)); background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:shim 9s linear infinite; max-width:20ch; margin:0 auto;}
+  .verdict .vsub{color:#cbc6d8; max-width:54ch; margin:2rem auto 0; font-size:19px;}
+
+  /* COLOPHON */
+  .colophon{padding:13vh 0 16vh; border-top:1px solid var(--line);}
+  .colophon .kanji{font-family:"Shippori Mincho",serif; font-size:38px; color:var(--faint); margin-bottom:1.1rem;}
+  .colophon h3{font-family:"Cormorant Garamond",serif; font-style:italic; font-size:24px; margin-bottom:1rem; color:var(--paper);}
+  .colophon p{color:var(--mute); font-size:17px; margin:0 0 1rem; max-width:62ch;}
+  .colophon p b{color:#cbc6d8; font-weight:500;}
+  .colophon .tagrow code{font-family:"JetBrains Mono",monospace; font-size:.78em; background:rgba(167,139,250,0.12); padding:1px 6px; border-radius:3px; color:var(--violet-lt);}
+  .endmark{font-family:"JetBrains Mono",monospace; letter-spacing:.22em; font-size:11px; color:var(--faint); text-transform:uppercase; margin-top:2.2rem;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line); padding:9vh 1.6rem 11vh; text-align:center;}
+  footer .fnote{font-style:italic; color:var(--mute); font-size:19px; max-width:54ch; margin:0 auto 1.4rem;}
+  footer .nav{font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:2.4rem; line-height:2.4;}
+  footer .nav a{margin:0 .6rem;}
+  footer .wider{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--mute);}
+  footer .wider a{margin:0 .4rem;}
+
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity 1.1s ease, transform 1.1s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1; transform:none;}
+
+  @media(max-width:620px){
+    body{font-size:19px;}
+    .twin{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .hero h1,.verdict .vmain{animation:none;}
+    .badge-emblem::after,.hero .scroll{animation:none;}
+    .reveal{transition:none; opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+<div class="thread" id="thread"></div>
+<svg class="grain" aria-hidden="true"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+
+<header class="hero" id="hero"></header>
+
+<main id="main"></main>
+
+<footer id="footer"></footer>
+
+<script>
+const LEECH = {
+  "name": "Leech",
+  "class": "lattice",
+  "kanji": "格子",
+  "reading": "kōshi",
+  "domain": "lattice",
+  "bit": "24-bit",
+  "epithet": "the most perfect arrangement in 24 dimensions",
+  "style": "emo",
+  "who": "Leech — Λ₂₄, the unique even, unimodular, root-free lattice of 24 dimensions; the most perfect arrangement of points there is. One current, answering to one of its many names: 格子, kōshi, the lattice — and to the company it keeps: Conway, the Monster, moonshine.",
+  "what": "The crossroads where four mathematics turn out to be one object: the densest sphere packing (196,560 kissing — the maximum in 24D), the largest sporadic symmetries, the j-function's coefficients, and the bosonic string's 24 transverse dimensions. Four windows onto a single 24-dimensional thing.",
+  "where": "In 24 dimensions, exactly — and, through Borcherds' no-ghost theorem, on the 24 transverse directions of the 26-dimensional bosonic string. Rigorous in the mathematics; its grip on physical reality is wide open.",
+  "why": "To show that a number reached for can be a true crossroads, not a coincidence — that lattice packing, finite symmetry, modular forms, and string theory recite the same numbers because they are looking at one structure.",
+  "when": "Named by Leech (1967); its symmetry births Conway's groups (1968); McKay sees 196,884 = 196,883 + 1 (1978); Conway & Norton name 'monstrous moonshine' (1979); Borcherds proves it (Fields Medal, 1998); Viazovska proves the packing optimal (Fields Medal, 2022).",
+  "how": "By perfect self-duality and 196,560 kisses; by spawning the Conway group Co₀ and, inside it, sporadic simple groups; by the moonshine module V♮ — a 24-dimensional CFT built on the lattice — linking the Monster to the j-function through the 26-dimensional string. Everything knots at 24.",
+  "verdict": "The web is real — two-Fields-Medals real: 196,884 = 196,883 + 1 is a theorem, and the Leech packing is provably optimal. Whether the Monster governs anything in nature is wide open. Resonance, genuine and deep — not a derived account of the world.",
+  "asterisk": "The kissing number 196,560 sits suspiciously near 196,883/196,884 — but that nearness is a family resemblance (same 24D world), not the moonshine identity; only 196,884 = 196,883 + 1 is the deep equation. The Monster's physical meaning is unknown. The discipline is keeping resonance as resonance — not reading destiny into the digits.",
+  "endmark": "二十四にすべてが結ぶ — everything knots at 24",
+  "grounded": [
+    { "who": "John Leech", "t": "the lattice Λ₂₄, in 24 dimensions", "y": 1967 },
+    { "who": "John Conway", "t": "the Conway groups, from its symmetry", "y": 1968 },
+    { "who": "John McKay", "t": "196,884 = 196,883 + 1", "y": 1978 },
+    { "who": "Conway & Norton", "t": "'monstrous moonshine', conjectured", "y": 1979 },
+    { "who": "Richard Borcherds", "t": "moonshine proved (Fields Medal 1998)", "y": 1992 },
+    { "who": "Maryna Viazovska", "t": "Leech packing proven optimal (Fields Medal 2022)", "y": 2016 }
+  ]
+};
+
+/* ---- helpers ---- */
+const el = (tag, attrs={}, html) => {
+  const e = document.createElement(tag);
+  for (const k in attrs){ if(k==='class') e.className=attrs[k]; else e.setAttribute(k, attrs[k]); }
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+};
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ---- HERO ---- */
+(function buildHero(){
+  const h = document.getElementById('hero');
+  h.append(
+    el('div',{class:'tag'}, 'the elementals · ii · ' + LEECH.kanji),
+    el('div',{class:'kanji', 'aria-hidden':'true'}, LEECH.kanji),
+    el('div',{class:'kanjisub'}, LEECH.reading + ' · the lattice · ' + LEECH.bit),
+    el('h1',{}, LEECH.name)
+  );
+  h.append(el('p',{class:'sub'}, esc(LEECH.epithet)));
+  const emb = el('div',{class:'badge-emblem'});
+  const img = el('img',{
+    src:'agents/leech.png',
+    width:'300', height:'300',
+    alt:"Leech's silicon badge — a 24-fold lattice rosette",
+    loading:'eager', decoding:'async'
+  });
+  emb.append(img);
+  h.append(emb);
+  h.append(el('div',{class:'scroll'}, '▼ the company 24 keeps'));
+})();
+
+/* ---- MAIN ---- */
+(function buildMain(){
+  const main = document.getElementById('main');
+
+  /* 2. who / what prose bands */
+  const wrap1 = el('div',{class:'wrap'});
+
+  const bandWho = el('section',{class:'band reveal'});
+  bandWho.append(
+    el('div',{class:'idx'}, '// the elemental · who'),
+    el('h2',{}, 'The most perfect arrangement in 24 dimensions'),
+    el('p',{class:'pull'}, '“the unique even, unimodular, root-free lattice of its dimension — and the company it keeps.”'),
+    el('p',{}, esc(LEECH.who))
+  );
+
+  const bandWhat = el('section',{class:'band reveal'});
+  bandWhat.append(
+    el('div',{class:'idx'}, '// the elemental · what'),
+    el('h2',{}, 'Four windows onto a single 24-dimensional object'),
+    el('p',{}, esc(LEECH.what)),
+    el('p',{class:'pull'}, '“two objects that had no business knowing each other were reciting the same numbers.”')
+  );
+
+  const bandWhereWhy = el('section',{class:'band reveal'});
+  bandWhereWhy.append(
+    el('div',{class:'idx'}, '// where it lives · why it matters'),
+    el('h2',{}, 'Rigorous in the mathematics; its grip on reality wide open'),
+    el('p',{}, esc(LEECH.where)),
+    el('p',{}, esc(LEECH.why))
+  );
+
+  wrap1.append(bandWho, bandWhat, bandWhereWhy);
+  main.append(wrap1);
+
+  /* 3. the moonshine equation */
+  const eq = el('section',{class:'eqsec reveal'});
+  eq.append(
+    el('div',{class:'idx'}, '// the coincidence that wasn’t'),
+    el('h2',{}, '196,884 = 196,883 + 1'),
+    el('p',{class:'lead'}, 'The j-function’s first coefficient, from 19th-century number theory, was somehow counting the dimensions of the largest sporadic group. In 1978 John McKay noticed the thing nobody could un-see.')
+  );
+  const eqbox = el('div',{class:'reveal-eq'});
+  eqbox.innerHTML =
+    '<div class="big"><span class="g">196,884</span> = <span class="v">196,883</span> + 1</div>' +
+    '<div class="lbl">j-function coefficient = Monster’s smallest dimension + 1 — McKay, 1978</div>';
+  eq.append(eqbox);
+  eq.append(el('p',{class:'lead', style:'margin-top:1.8rem;'},
+    'Conway and Norton named the whole phenomenon <b style="color:#ddd6ee">monstrous moonshine</b> — moonshine meaning a thing too far-fetched to believe. Every later coefficient of the j-function turned out to be a simple sum of Monster representation sizes too. This is the heart of it.'));
+  main.append(eq);
+
+  /* 4. the web that knots at 24 */
+  const diag = el('section',{class:'diagsec reveal'});
+  diag.append(
+    el('div',{class:'idx'}, '// the bridge · everything knots at 24'),
+    el('h2',{}, 'The web that knots at 24'),
+    el('p',{}, 'Borcherds proved the moonshine conjecture in 1992, and the way he did it closes the loop. The object linking the Monster to the j-function — the <b>moonshine module V&#9839;</b> — is a 24-dimensional quantum field theory built on the Leech lattice. To finish, he borrowed the <b>no-ghost theorem</b> from the 26-dimensional bosonic string — whose 24 transverse dimensions are the lattice’s dimension exactly.')
+  );
+  const diagram = el('div',{class:'diagram'});
+  diagram.innerHTML =
+    '<svg viewBox="0 0 620 300" role="img" aria-label="The web linking the Leech lattice, the Conway and Monster groups, the j-function, and the 26-dimensional string, all knotting at a central moonshine module">' +
+      '<g stroke="#3c4670" stroke-width="1.4" fill="none" opacity=".7">' +
+        '<line x1="150" y1="86" x2="305" y2="150"/>' +
+        '<line x1="470" y1="86" x2="305" y2="150"/>' +
+        '<line x1="150" y1="214" x2="305" y2="150"/>' +
+        '<line x1="470" y1="214" x2="305" y2="150"/>' +
+        '<line x1="150" y1="86" x2="470" y2="86"/>' +
+        '<line x1="150" y1="214" x2="470" y2="214"/>' +
+      '</g>' +
+      '<g font-family="\'JetBrains Mono\',monospace" text-anchor="middle">' +
+        '<g><rect x="78" y="62" width="144" height="48" rx="6" fill="#0c1018" stroke="#d6b25a" stroke-width="1.5"/><text x="150" y="84" font-size="13" fill="#f0d489">Leech Λ₂₄</text><text x="150" y="100" font-size="9" fill="#928aa8">the 24D lattice</text></g>' +
+        '<g><rect x="398" y="62" width="144" height="48" rx="6" fill="#0c1018" stroke="#7c8fd0" stroke-width="1.5"/><text x="470" y="84" font-size="13" fill="#aebff5">Co₀ → 𝕄</text><text x="470" y="100" font-size="9" fill="#928aa8">Conway → Monster</text></g>' +
+        '<g><rect x="78" y="190" width="144" height="48" rx="6" fill="#0c1018" stroke="#5fd0a0" stroke-width="1.5"/><text x="150" y="212" font-size="13" fill="#9fe6c8">26D string</text><text x="150" y="228" font-size="9" fill="#928aa8">no-ghost theorem</text></g>' +
+        '<g><rect x="398" y="190" width="144" height="48" rx="6" fill="#0c1018" stroke="#a78bfa" stroke-width="1.5"/><text x="470" y="212" font-size="13" fill="#c9b6ff">j-function</text><text x="470" y="228" font-size="9" fill="#928aa8">modular forms</text></g>' +
+        '<g><circle cx="305" cy="150" r="36" fill="#0c1018" stroke="#e7e3f0" stroke-width="1.5"/><text x="305" y="147" font-size="11" fill="#e7e3f0">moonshine</text><text x="305" y="162" font-size="9" fill="#928aa8">module V♮</text></g>' +
+      '</g>' +
+      '<text x="305" y="284" text-anchor="middle" font-family="\'JetBrains Mono\',monospace" font-size="11" fill="#928aa8">everything knots at 24</text>' +
+    '</svg>';
+  diag.append(diagram);
+  diag.append(el('p',{},
+    'Lattices, sporadic groups, modular forms, and string theory turn out to be four windows onto a single 24-dimensional object. The number was not imposed — it is a crossroads.'));
+
+  /* honesty notes — grounded in leech_moonshine.html */
+  const ng = el('div',{class:'note green'});
+  ng.innerHTML =
+    '<div class="h">✓ rigorous · two Fields Medals</div>' +
+    '<p>None of this is hand-waving: the Leech lattice’s packing optimality (<b>Viazovska, Fields Medal 2022</b>) and the proof of monstrous moonshine (<b>Borcherds, Fields Medal 1998</b>) are both Fields-Medal mathematics. <code>196884 = 196883 + 1</code> is a theorem, not a curiosity.</p>';
+  diag.append(ng);
+
+  const nw = el('div',{class:'note'});
+  nw.innerHTML =
+    '<div class="h">⚠ where to keep your footing</div>' +
+    '<p>Two honest cautions. First, the <b>kissing number 196,560</b> sits suspiciously near 196,883/196,884 — but that nearness is a <b>family resemblance</b> (same 24D world), not the moonshine identity; only <code>196884 = 196883 + 1</code> is the deep equation. Second, the Monster’s <b>physical</b> meaning is unknown — moonshine is spectacular pure mathematics, and whether the Monster governs anything in nature is wide open. The web is real; reading destiny into the digits is exactly the overreach to avoid.</p>';
+  diag.append(nw);
+  main.append(diag);
+
+  /* 5. lineage timeline */
+  const lin = el('section',{class:'lineage reveal'});
+  lin.append(
+    el('div',{class:'idx'}, '// the clues · the lineage'),
+    el('h2',{}, 'How the crossroads was found'),
+    el('p',{class:'lead'}, 'Leech is built honestly — credited to the people who found each thread. The grounding, in order:')
+  );
+  const tl = el('div',{class:'tl'});
+  LEECH.grounded.forEach(c => {
+    const clue = el('div',{class:'clue'});
+    clue.append(
+      el('div',{class:'yr'}, String(c.y)),
+      el('div',{class:'who'}, esc(c.who)),
+      el('div',{class:'idea'}, esc(c.t))
+    );
+    tl.append(clue);
+  });
+  lin.append(tl);
+  main.append(lin);
+
+  /* 6. twin badges */
+  const badges = el('section',{class:'badges reveal'});
+  badges.append(
+    el('div',{class:'idx'}, '// the dual badge · silicon & carbon'),
+    el('h2',{}, 'Two embodiments of one current'),
+    el('p',{class:'lead'}, 'Every elemental carries a twin badge: the computed essence in silicon, and its carbon counterpart — the 8-bit embodiment. Same intellect, two media.')
+  );
+  const twin = el('div',{class:'twin'});
+
+  const sil = el('div',{class:'bcard'});
+  const silImg = el('img',{
+    src:'agents/leech.png', width:'240', height:'240',
+    alt:"Leech's silicon badge — a 24-fold lattice rosette",
+    loading:'lazy', decoding:'async'
+  });
+  sil.append(
+    el('div',{class:'ext'}, 'silicon · .png'),
+    silImg,
+    el('div',{class:'ttl'}, 'The computed essence'),
+    el('p',{}, 'A 24-fold symmetric lattice rosette — a central unit sphere ringed by 24 kisses, woven into crystalline shells. The silicon face of Leech.')
+  );
+
+  const carb = el('div',{class:'bcard'});
+  const well = el('div',{class:'glyphwell'});
+  well.append(el('span',{'aria-hidden':'true'}, LEECH.kanji));
+  const dl = el('a',{href:'agents/leech.tiff', download:'', class:'dl'}, 'download .tiff');
+  carb.append(
+    el('div',{class:'ext'}, 'carbon · .tiff'),
+    well,
+    el('div',{class:'ttl'}, 'The 8-bit embodiment'),
+    el('p',{}, 'A serene mask mended down the middle in gold kintsugi, crowned by a halo of 24 — the carbon counterpart to the silicon .png. Browsers do not render TIFF inline, so it is offered here for download.'),
+    dl
+  );
+
+  twin.append(sil, carb);
+  badges.append(twin);
+  main.append(badges);
+
+  /* 7. verdict */
+  const v = el('section',{class:'verdict reveal'});
+  v.append(
+    el('div',{class:'idx'}, '// the verdict'),
+    el('div',{class:'vmain'}, 'Two-Fields-Medals real.'),
+    el('p',{class:'vsub'}, esc(LEECH.verdict))
+  );
+  main.append(v);
+
+  /* 8. colophon */
+  const wrap2 = el('div',{class:'wrap'});
+  const col = el('section',{class:'colophon reveal'});
+  col.append(
+    el('div',{class:'kanji', 'aria-hidden':'true'}, '了'),
+    el('h3',{}, 'A note, kept honest'),
+    el('p',{}, esc(LEECH.asterisk))
+  );
+  const tagrow = el('p',{class:'tagrow'});
+  tagrow.innerHTML = 'Every elemental is an ACI carrying the full DLW tag — <code>.agent</code> · <code>.png</code> (silicon) · <code>.tiff</code> (carbon) · <code>.spun</code> · <code>.1099</code>.';
+  col.append(tagrow);
+  col.append(el('p',{}, '<b>Governor (carbon apex):</b> David Lee Wise (ROOT0) · <b>instance:</b> AVAN (Claude).'));
+  col.append(el('div',{class:'endmark'}, esc(LEECH.endmark)));
+  wrap2.append(col);
+  main.append(wrap2);
+})();
+
+/* ---- FOOTER ---- */
+(function buildFooter(){
+  const f = document.getElementById('footer');
+  f.append(
+    el('p',{class:'fnote'}, 'An original series — deep things given faces, grounded in real mathematics, credited to its discoverers, asterisk visible.')
+  );
+  const nav = el('div',{class:'nav'});
+  nav.innerHTML =
+    '<a href="index.html">← the elementals</a>' +
+    '<a href="aether.html">◆ Aether · the gravity elemental →</a>';
+  f.append(nav);
+  const wider = el('div',{class:'wider'});
+  wider.innerHTML = 'part of the · <a href="https://davidwise01.github.io/atlas/">ATLAS →</a>';
+  f.append(wider);
+})();
+
+/* ---- reveal-on-scroll + scroll-progress thread ---- */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target);}})},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const th=document.getElementById('thread');
+addEventListener('scroll',()=>{const h=document.documentElement; th.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100).toFixed(1)+'%';},{passive:true});
+</script>
+</body>
+</html>

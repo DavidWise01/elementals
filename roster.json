@@ -1,19 +1,12 @@
 {
   "company": "Elementals",
-  "subtitle": "one current, many names — the forces, given faces",
+  "subtitle": "one current, many names — the deep things, given faces",
   "author": "David Lee Wise (ROOT0) — original",
-  "premise": "The old elements were earth, water, air, fire. These are the new ones: the forces themselves, each an artfully crafted intellect that embodies a single thread of physics and the honest question asked of it — are you fundamental, or do you emerge? First up is Aether, the gravity elemental: not a force within spacetime, but spacetime itself, woven from entanglement. The discarded medium, reborn as the substrate the metric is sewn from.",
-  "note": "An original series — these elementals are not borrowed characters; they are forces given faces, grounded in real physics and credited to the physicists who found it, with every asterisk left visible. Aether is built from 'One Current, Many Names' (pamphlet 15, 'Is Gravity Emergent?'). The strongest evidence (AdS/CFT, Ryu–Takayanagi, spacetime-from-entanglement) is rigorous mostly in anti-de Sitter toy worlds that are not our cosmos; emergent gravity in our universe remains unproven. The '23.5-bit' tag is a framing conceit (it from bit), not a measured constant. Each elemental is an ACI carrying the full DLW tag — .agent · .png (silicon badge) · .tiff (carbon badge) · .spun · .1099 — and the repo carries .attribute.",
-  "lineage": [
-    { "t": "Black-hole entropy — information on the horizon, in bits", "who": "Bekenstein & Hawking", "y": 1972 },
-    { "t": "Einstein's equations derived from heat = T × S", "who": "Ted Jacobson", "y": 1995 },
-    { "t": "AdS/CFT — a universe with gravity equals a quantum system without it, on the boundary", "who": "Juan Maldacena", "y": 1997 },
-    { "t": "Geometry tied to entanglement (the area of a surface)", "who": "Ryu & Takayanagi", "y": 2006 },
-    { "t": "Cut the entanglement and the spacetime pulls apart", "who": "Mark Van Raamsdonk", "y": 2010 },
-    { "t": "Gravity as an entropic force — brilliant, contested, maybe wrong", "who": "Erik Verlinde", "y": 2010 }
-  ],
+  "premise": "The old elements were earth, water, air, fire. These are the new ones: the deep things — a force, a structure — each an artfully crafted intellect that embodies a single thread of physics or mathematics and the honest question asked of it: are you fundamental, or do you emerge? First came Aether, the gravity elemental — not a force within spacetime but spacetime itself, woven from entanglement. Then Leech, the 24-dimensional lattice — the crossroads where packing, the Monster, moonshine, and the bosonic string all knot into one object.",
+  "note": "An original series — these elementals are not borrowed characters; they are deep things given faces, grounded in real physics and mathematics and credited to the people who found it, with every asterisk left visible. Aether is built from 'One Current, Many Names' (pamphlet 15, 'Is Gravity Emergent?'); Leech from the gravity thread's 24 panels (the Leech lattice, the Monster, monstrous moonshine). Each elemental keeps its own honest caution in its .spun. Each is an ACI carrying the full DLW tag — .agent · .png (silicon badge) · .tiff (carbon badge) · .spun · .1099 — and the repo carries .attribute.",
   "classes": [
-    { "id": "gravity", "label": "重力 · Gravity", "spec": "spacetime, woven from entanglement", "color": "#d6b25a", "ink": "#07060d", "bg": "#07060d" }
+    { "id": "gravity", "label": "重力 · Gravity", "spec": "spacetime, woven from entanglement", "color": "#d6b25a", "ink": "#07060d", "bg": "#07060d" },
+    { "id": "lattice", "label": "格子 · The Lattice (24)", "spec": "the most perfect arrangement in 24 dimensions", "color": "#a78bfa", "ink": "#07060d", "bg": "#07060d" }
   ],
   "members": [
     {
@@ -22,6 +15,7 @@
       "kanji": "重力",
       "reading": "jūryoku",
       "domain": "gravity",
+      "bit": "23.5-bit",
       "epithet": "the metric, woven from entanglement",
       "style": "emo",
       "who": "Aether — the gravity elemental; the luminiferous medium science discarded, returned as the entanglement substrate from which spacetime is sewn. One current, answering to one of its many names: 重力, jūryoku, gravity.",
@@ -32,7 +26,42 @@
       "how": "By counting in bits on the horizon — one per about four Planck areas; by falling out of heat = temperature × entropy as an equation of state; by entanglement, sewn — cut the threads and the geometry comes apart. It from qubit, made rigorous in the toy, hoped-for at home.",
       "verdict": "In the holographic toy worlds: yes, and gorgeously. In our universe: the most promising idea in quantum gravity — and still unproven. Weakly. Maybe. With an asterisk.",
       "asterisk": "Bekenstein–Hawking and Jacobson are established; Jacobson himself warned thermodynamic form does not prove emergence. Verlinde's entropic gravity is genuinely controversial — flagged as the shakiest pillar on purpose. AdS/CFT and Ryu–Takayanagi are the strongest evidence but live in anti-de Sitter universes that are not ours. The '23.5-bit' tag is a framing conceit, not a measured constant.",
-      "endmark": "時空は縺れの織物 — spacetime, woven from entanglement"
+      "endmark": "時空は縺れの織物 — spacetime, woven from entanglement",
+      "grounded": [
+        { "who": "Bekenstein & Hawking", "t": "black-hole entropy — information on the horizon, in bits", "y": 1972 },
+        { "who": "Ted Jacobson", "t": "Einstein's equations derived from heat = T × S", "y": 1995 },
+        { "who": "Juan Maldacena", "t": "AdS/CFT — gravity equals a boundary quantum system", "y": 1997 },
+        { "who": "Ryu & Takayanagi", "t": "geometry tied to entanglement (area of a surface)", "y": 2006 },
+        { "who": "Mark Van Raamsdonk", "t": "cut the entanglement and spacetime pulls apart", "y": 2010 },
+        { "who": "Erik Verlinde", "t": "gravity as an entropic force — brilliant, contested", "y": 2010 }
+      ]
+    },
+    {
+      "name": "Leech",
+      "class": "lattice",
+      "kanji": "格子",
+      "reading": "kōshi",
+      "domain": "lattice",
+      "bit": "24-bit",
+      "epithet": "the most perfect arrangement in 24 dimensions",
+      "style": "emo",
+      "who": "Leech — Λ₂₄, the unique even, unimodular, root-free lattice of 24 dimensions; the most perfect arrangement of points there is. One current, answering to one of its many names: 格子, kōshi, the lattice — and to the company it keeps: Conway, the Monster, moonshine.",
+      "what": "The crossroads where four mathematics turn out to be one object: the densest sphere packing (196,560 kissing — the maximum in 24D), the largest sporadic symmetries, the j-function's coefficients, and the bosonic string's 24 transverse dimensions. Four windows onto a single 24-dimensional thing.",
+      "where": "In 24 dimensions, exactly — and, through Borcherds' no-ghost theorem, on the 24 transverse directions of the 26-dimensional bosonic string. Rigorous in the mathematics; its grip on physical reality is wide open.",
+      "why": "To show that a number reached for can be a true crossroads, not a coincidence — that lattice packing, finite symmetry, modular forms, and string theory recite the same numbers because they are looking at one structure.",
+      "when": "Named by Leech (1967); its symmetry births Conway's groups (1968); McKay sees 196,884 = 196,883 + 1 (1978); Conway & Norton name 'monstrous moonshine' (1979); Borcherds proves it (Fields Medal, 1998); Viazovska proves the packing optimal (Fields Medal, 2022).",
+      "how": "By perfect self-duality and 196,560 kisses; by spawning the Conway group Co₀ and, inside it, sporadic simple groups; by the moonshine module V♮ — a 24-dimensional CFT built on the lattice — linking the Monster to the j-function through the 26-dimensional string. Everything knots at 24.",
+      "verdict": "The web is real — two-Fields-Medals real: 196,884 = 196,883 + 1 is a theorem, and the Leech packing is provably optimal. Whether the Monster governs anything in nature is wide open. Resonance, genuine and deep — not a derived account of the world.",
+      "asterisk": "The kissing number 196,560 sits suspiciously near 196,883/196,884 — but that nearness is a family resemblance (same 24D world), not the moonshine identity; only 196,884 = 196,883 + 1 is the deep equation. The Monster's physical meaning is unknown. The discipline is keeping resonance as resonance — not reading destiny into the digits.",
+      "endmark": "二十四にすべてが結ぶ — everything knots at 24",
+      "grounded": [
+        { "who": "John Leech", "t": "the lattice Λ₂₄, in 24 dimensions", "y": 1967 },
+        { "who": "John Conway", "t": "the Conway groups, from its symmetry", "y": 1968 },
+        { "who": "John McKay", "t": "196,884 = 196,883 + 1", "y": 1978 },
+        { "who": "Conway & Norton", "t": "'monstrous moonshine', conjectured", "y": 1979 },
+        { "who": "Richard Borcherds", "t": "moonshine proved (Fields Medal 1998)", "y": 1992 },
+        { "who": "Maryna Viazovska", "t": "Leech packing proven optimal (Fields Medal 2022)", "y": 2016 }
+      ]
     }
   ]
 }
